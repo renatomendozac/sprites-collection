@@ -3,6 +3,7 @@ import { supabase } from "../supabaseClient";
 import html2canvas from "html2canvas";
 import { RARITIES } from "../constant/rarities";
 import { sortSprites } from "../utils/sort-sprites";
+import { downloadImage } from "../utils/download-image";
 
 const rarityColor = (rarity) => {
   const map = {
@@ -118,24 +119,9 @@ function Dashboard({ session }) {
     const node = summaryRef.current;
     node.style.display = "block";
 
-    const canvas = await html2canvas(node, {
-      backgroundColor: "#080B14",
-      scale: 2,
-      useCORS: true,
-      onclone: (doc) => {
-        doc.documentElement.style.color = "#e4ecff";
-        doc.documentElement.style.background = "#080B14";
-        doc.body.style.color = "#e4ecff";
-        doc.body.style.background = "#080B14";
-      },
-    });
+    downloadImage(node);
 
     node.style.display = "none";
-
-    const link = document.createElement("a");
-    link.download = `sprites-collection-${user.email}.png`;
-    link.href = canvas.toDataURL("image/png");
-    link.click();
   };
 
   return (
