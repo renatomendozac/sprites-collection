@@ -130,6 +130,10 @@ function Dashboard({ session }) {
         <div className="brand">
           <div className="eyebrow">// Registro de espíritus</div>
           <h1>SPRITES FORNITE</h1>
+          <p>
+            My Sprite Collection helps Fortnite players track every Sprite, mark
+            collected Sprites and discover missing ones.
+          </p>
         </div>
         <div className="user-chip">
           {user.user_metadata?.avatar_url && (

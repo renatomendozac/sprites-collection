@@ -177,6 +177,12 @@ button {
   letter-spacing: 0.02em;
   text-shadow: 0 0 14px rgba(47, 230, 224, 0.35);
 }
+.brand p {
+  font-family: "Share Tech Mono", monospace;
+  font-size: 12px;
+  color: var(--text-dim);
+  margin-top: 4px;
+}
 .user-chip {
   display: flex;
   align-items: center;
