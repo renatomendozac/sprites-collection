@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%">
+  <defs>
+    <linearGradient id="spiritGrad" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#00f2fe" />
+      <stop offset="50%" stop-color="#9b51e0" />
+      <stop offset="100%" stop-color="#f857a6" />
+    </linearGradient>
+  </defs>
+  <circle cx="256" cy="256" r="240" fill="#111827" />
+  <path d="M256,90 C270,130 300,160 330,180 C370,210 390,250 370,300 C350,350 300,390 256,390 C212,390 162,350 142,300 C122,250 142,210 182,180 C212,160 242,130 256,90 Z M256,160 C240,190 210,210 195,235 C175,265 175,305 205,335 C235,365 277,365 307,335 C337,305 337,265 317,235 C302,210 272,190 256,160 Z" fill="url(#spiritGrad)" />
+  <path d="M256,210 C245,230 225,245 220,270 C215,295 230,320 256,320 C282,320 297,295 292,270 C287,245 267,230 256,210 Z" fill="url(#spiritGrad)" opacity="0.8" />
+</svg>
