@@ -129,7 +129,7 @@ function Dashboard({ session }) {
       <div className="topbar">
         <div className="brand">
           <div className="eyebrow">// Registro de espíritus</div>
-          <h1>SPRITES FORNITE</h1>
+          <h1>My Sprite Collection</h1>
           <p>
             My Sprite Collection helps Fortnite players track every Sprite, mark
             collected Sprites and discover missing ones.
@@ -294,7 +294,7 @@ function Dashboard({ session }) {
       )}
 
       <div id="summary-export" ref={summaryRef} style={{ display: "none" }}>
-        <h2>https://myspritecollection.com/</h2>
+        <h2>myspritecollection.com</h2>
         <div className="sub">
           {user.user_metadata?.full_name || user.email} · {capturedCount}/
           {total} espíritus · {new Date().toLocaleDateString("es-ES")}
