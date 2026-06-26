@@ -32,6 +32,7 @@ function Dashboard({ session }) {
   const [search, setSearch] = useState("");
   const [rarityFilter, setRarityFilter] = useState("all");
   const [statusFilter, setStatusFilter] = useState("all");
+  const topRef = useRef(0);
   const summaryRef = useRef(null);
 
   useEffect(() => {
@@ -121,7 +122,8 @@ function Dashboard({ session }) {
     const node = summaryRef.current;
     node.style.display = "block";
 
-    downloadImage(node);
+    await new Promise((resolve) => requestAnimationFrame(resolve));
+    await downloadImage(node);
 
     node.style.display = "none";
   };

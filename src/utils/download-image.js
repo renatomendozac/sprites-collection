@@ -2,6 +2,11 @@ import html2canvas from "html2canvas";
 
 const fileName = "my-sprite-collection.png";
 
+const openImage = (blob) => {
+  const url = URL.createObjectURL(blob);
+  window.open(url, "_blank");
+};
+
 export const downloadImage = async (node) => {
   const canvas = await html2canvas(node, {
     backgroundColor: "#080B14",
@@ -15,32 +20,39 @@ export const downloadImage = async (node) => {
     },
   });
 
-  canvas.toBlob(async (blob) => {
-    const file = new File([blob], fileName, {
-      type: "image/png",
-    });
+  const blob = await new Promise((resolve) => {
+    canvas.toBlob(resolve, "image/png");
+  });
 
-    const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+  if (!blob) return;
 
-    if (isMobile) {
-      if (navigator.canShare && navigator.canShare({ files: [file] })) {
-        await navigator.share({
-          files: [file],
-          title: "My sprite collection",
-        });
-      } else {
-        const url = URL.createObjectURL(blob);
-        window.open(url, "_blank");
+  const file = new File([blob], fileName, {
+    type: "image/png",
+  });
+
+  const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+
+  if (isMobile) {
+    if (navigator.canShare?.({ files: [file] })) {
+      try {
+        await navigator.share({ files: [file] });
+      } catch (error) {
+        openImage(blob);
       }
     } else {
-      const url = URL.createObjectURL(blob);
-
-      const link = document.createElement("a");
-      link.href = url;
-      link.download = fileName;
-      link.click();
-
-      URL.revokeObjectURL(url);
+      openImage(blob);
     }
-  }, "image/png");
+  } else {
+    const url = URL.createObjectURL(blob);
+
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = fileName;
+
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
+  }
 };
