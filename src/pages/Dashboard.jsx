@@ -22,6 +22,8 @@ const placeholderSvg = () => {
   return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" fill="#0A0F1E"/><text x="50" y="55" font-size="12" fill="#3a4a70" text-anchor="middle" font-family="monospace">sin foto</text></svg>`;
 };
 
+const showFilterRarity = false;
+
 function Dashboard({ session }) {
   const user = session.user;
   const [sprites, setsprites] = useState([]);
@@ -210,23 +212,25 @@ function Dashboard({ session }) {
         </button>
       </div>
 
-      <div className="chip-row" style={{ marginBottom: 18 }}>
-        <button
-          className={`chip ${rarityFilter === "all" ? "active" : ""}`}
-          onClick={() => setRarityFilter("all")}
-        >
-          Toda rareza
-        </button>
-        {RARITIES.map((r) => (
+      {showFilterRarity && (
+        <div className="chip-row" style={{ marginBottom: 18 }}>
           <button
-            key={r.id}
-            className={`chip ${rarityFilter === r.id ? "active" : ""}`}
-            onClick={() => setRarityFilter(r.id)}
+            className={`chip ${rarityFilter === "all" ? "active" : ""}`}
+            onClick={() => setRarityFilter("all")}
           >
-            {r.label}
+            Toda rareza
           </button>
-        ))}
-      </div>
+          {RARITIES.map((r) => (
+            <button
+              key={r.id}
+              className={`chip ${rarityFilter === r.id ? "active" : ""}`}
+              onClick={() => setRarityFilter(r.id)}
+            >
+              {r.label}
+            </button>
+          ))}
+        </div>
+      )}
 
       {loading ? (
         <div className="loading-msg mono">// Cargando catálogo…</div>
