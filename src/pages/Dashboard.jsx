@@ -290,7 +290,7 @@ function Dashboard({ session }) {
       )}
 
       <div id="summary-export" ref={summaryRef} style={{ display: "none" }}>
-        <h2>SPRITES FORNITE</h2>
+        <h2>https://myspritecollection.com/</h2>
         <div className="sub">
           {user.user_metadata?.full_name || user.email} · {capturedCount}/
           {total} espíritus · {new Date().toLocaleDateString("es-ES")}
