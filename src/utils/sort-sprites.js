@@ -1,20 +1,24 @@
 const nameOrder = [
+  "Batman",
   "Water",
   "Earth",
   "Fire",
   "Duck",
-  "Demon",
   "Ghost",
-  "King",
-  "Punk",
   "Dream",
-  "Zero Point",
+  "Demon",
+  "Punk",
+  "King",
+  "Vini Jr",
   "Burnt Peanut",
+  "Zero Point",
   "Fishy",
   "Striker",
   "Aura",
   "Boss",
   "Grim",
+  "Air",
+  "Seven",
 ];
 
 const typeOrder = ["Gold", "Gummy", "Galaxy"];
