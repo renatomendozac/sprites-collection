@@ -1,9 +1,10 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import { supabase } from "../supabaseClient";
 import html2canvas from "html2canvas";
 import { RARITIES } from "../constant/rarities";
 import { sortSprites } from "../utils/sort-sprites";
 import { downloadImage } from "../utils/download-image";
+import UserHeaderActions from "../components/UserHeaderActions";
+import { StorageService } from "../services/storage";
 
 const rarityColor = (rarity) => {
   const map = {
@@ -13,6 +14,7 @@ const rarityColor = (rarity) => {
     Epic: "#B14FFF",
     Legendary: "#FF8A3D",
     Mythic: "#2FE6E0",
+    Special: "#F5D300",
   };
 
   return map[rarity] || "#9AA5BD";
@@ -25,7 +27,7 @@ const placeholderSvg = () => {
 const showFilterRarity = false;
 
 function Dashboard({ session }) {
-  const user = session.user;
+  const user = session?.user;
   const [sprites, setsprites] = useState([]);
   const [progress, setProgress] = useState({});
   const [loading, setLoading] = useState(true);
@@ -39,15 +41,11 @@ function Dashboard({ session }) {
     const loadData = async () => {
       setLoading(true);
 
-      const { data: spritesData, error: spritesError } = await supabase
-        .from("sprites")
-        .select("*")
-        .order("sort_order", { ascending: true });
+      const { data: spritesData, error: spritesError } =
+        await StorageService.loadSprites();
 
-      const { data: progressData, error: progressError } = await supabase
-        .from("user_sprites")
-        .select("*")
-        .eq("user_id", user.id);
+      const { data: progressData, error: progressError } =
+        await StorageService.loadUserSprites(user?.id);
 
       if (spritesError) console.error(spritesError);
       if (progressError) console.error(progressError);
@@ -70,13 +68,7 @@ function Dashboard({ session }) {
     const updated = { captured: !current.captured, level: current.level || 1 };
     setProgress((p) => ({ ...p, [spriteId]: updated }));
 
-    await supabase.from("user_sprites").upsert({
-      user_id: user.id,
-      sprite_id: spriteId,
-      captured: updated.captured,
-      level: updated.level,
-      updated_at: new Date().toISOString(),
-    });
+    await StorageService.updateUserSprite(user?.id, spriteId, updated);
   };
 
   const setLevel = async (spriteId, level) => {
@@ -88,13 +80,7 @@ function Dashboard({ session }) {
     const updated = { ...current, level };
     setProgress((p) => ({ ...p, [spriteId]: updated }));
 
-    await supabase.from("user_sprites").upsert({
-      user_id: user.id,
-      sprite_id: spriteId,
-      captured: updated.captured,
-      level: updated.level,
-      updated_at: new Date().toISOString(),
-    });
+    await StorageService.updateUserSprite(user?.id, spriteId, updated);
   };
 
   const filtered = useMemo(() => {
@@ -139,18 +125,7 @@ function Dashboard({ session }) {
             collected Sprites and discover missing ones.
           </p>
         </div>
-        <div className="user-chip">
-          {user.user_metadata?.avatar_url && (
-            <img src={user.user_metadata.avatar_url} alt={user.email} />
-          )}
-          <span>{user.user_metadata?.full_name || user.email}</span>
-          <button
-            className="logout-btn"
-            onClick={() => supabase.auth.signOut()}
-          >
-            Salir
-          </button>
-        </div>
+        <UserHeaderActions user={user} />
       </div>
 
       <div className="stats">
@@ -238,8 +213,7 @@ function Dashboard({ session }) {
         <div className="loading-msg mono">// Cargando catálogo…</div>
       ) : sprites.length === 0 ? (
         <div className="empty-msg">
-          // Aún no hay espíritus cargados en el catálogo. Súbelos desde
-          Supabase (tabla "sprites").
+          // Aún no hay espíritus cargados en el catálogo.
         </div>
       ) : filtered.length === 0 ? (
         <div className="empty-msg">
@@ -302,7 +276,7 @@ function Dashboard({ session }) {
       <div id="summary-export" ref={summaryRef} style={{ display: "none" }}>
         <h2>myspritecollection.com</h2>
         <div className="sub">
-          {user.user_metadata?.full_name || user.email} · {capturedCount}/
+          {user?.user_metadata?.full_name || user?.email} · {capturedCount}/
           {total} espíritus · {new Date().toLocaleDateString("es-ES")}
         </div>
         <div className="sgrid">

@@ -184,6 +184,11 @@ button {
   color: var(--text-dim);
   margin-top: 4px;
 }
+.user-header-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
 .user-chip {
   display: flex;
   align-items: center;
@@ -551,5 +556,8 @@ button {
   .toolbar {
     flex-direction: column;
     align-items: stretch;
+  }
+  .user-header-actions {
+    flex-direction: row;
   }
 }

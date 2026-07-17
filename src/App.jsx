@@ -23,5 +23,5 @@ export default function App() {
     return <div className="loading-msg mono">// Cargando sesión…</div>;
   }
 
-  return session ? <Dashboard session={session} /> : <Login />;
+  return <Dashboard session={session} />;
 }
