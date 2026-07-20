@@ -19,6 +19,7 @@ const nameOrder = [
   "Grim",
   "Air",
   "Seven",
+  "Pollo",
 ];
 
 const typeOrder = ["Gold", "Gummy", "Galaxy"];
