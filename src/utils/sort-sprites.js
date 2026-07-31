@@ -27,6 +27,7 @@ const nameOrder = [
 
 const typeOrder = [
   "Cube",
+  "",
   "Gold",
   "Quack",
   "Gummy",
@@ -44,8 +45,8 @@ export const sortSprites = (sprites) => {
     if (type !== 0) return type;
 
     return (
-      typeOrder.findIndex((r) => a.rarity.includes(r)) -
-      typeOrder.findIndex((r) => b.rarity.includes(r))
+      typeOrder.findIndex((r) => a.name.includes(r)) -
+      typeOrder.findIndex((r) => b.name.includes(r))
     );
   });
 
