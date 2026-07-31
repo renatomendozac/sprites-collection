@@ -1,4 +1,5 @@
 const nameOrder = [
+  "John Wick",
   "Batman",
   "Water",
   "Earth",
@@ -20,9 +21,19 @@ const nameOrder = [
   "Air",
   "Seven",
   "Pollo",
+  "Llama",
+  "Peely",
 ];
 
-const typeOrder = ["Gold", "Gummy", "Galaxy"];
+const typeOrder = [
+  "Cube",
+  "Gold",
+  "Quack",
+  "Gummy",
+  "Galaxy",
+  "Holofoil",
+  "Gem",
+];
 
 export const sortSprites = (sprites) => {
   const spritesDataSorted = (sprites || []).sort((a, b) => {
