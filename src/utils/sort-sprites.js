@@ -20,6 +20,7 @@ const nameOrder = [
   "Grim",
   "Air",
   "Seven",
+  "Ironmouse",
   "Pollo",
   "Llama",
   "Peely",
