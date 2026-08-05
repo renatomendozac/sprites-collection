@@ -41,8 +41,11 @@ function Dashboard({ session }) {
     const loadData = async () => {
       setLoading(true);
 
-      const { data: spritesData, error: spritesError } =
-        await StorageService.loadSprites();
+      const { data, error: spritesError } = await StorageService.loadSprites();
+      const spritesData = data.map((s) => ({
+        ...s,
+        name: s.name.replace("Sprite", "").trim(),
+      }));
 
       const { data: progressData, error: progressError } =
         await StorageService.loadUserSprites(user?.id);
