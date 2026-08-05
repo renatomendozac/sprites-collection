@@ -2,7 +2,6 @@ import React, { useEffect, useState, useMemo, useRef } from "react";
 import { supabase } from "./supabaseClient";
 import html2canvas from "html2canvas";
 import Dashboard from "./pages/Dashboard";
-import Login from "./pages/Login";
 
 export default function App() {
   const [session, setSession] = useState(null);
