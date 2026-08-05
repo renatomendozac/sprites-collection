@@ -473,7 +473,7 @@ button {
   position: fixed;
   left: -9999px;
   top: 0;
-  width: 900px;
+  width: 1080px;
   background: #080b14;
   color: var(--text);
   padding: 32px;
@@ -491,6 +491,11 @@ button {
   font-size: 12px;
   color: var(--text-dim);
   margin-bottom: 18px;
+}
+#summary-export .sgrid-container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px 24px;
 }
 #summary-export .sgrid {
   display: grid;

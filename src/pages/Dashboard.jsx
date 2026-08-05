@@ -5,6 +5,7 @@ import { sortSprites } from "../utils/sort-sprites";
 import { downloadImage } from "../utils/download-image";
 import UserHeaderActions from "../components/UserHeaderActions";
 import { StorageService } from "../services/storage";
+import { groupBySprite } from "../utils/group-by-sprite";
 
 const rarityColor = (rarity) => {
   const map = {
@@ -279,28 +280,49 @@ function Dashboard({ session }) {
       <div id="summary-export" ref={summaryRef} style={{ display: "none" }}>
         <h2>myspritecollection.com</h2>
         <div className="sub">
-          {user?.user_metadata?.full_name || user?.email} · {capturedCount}/
-          {total} espíritus · {new Date().toLocaleDateString("es-ES")}
+          {capturedCount}/{total} espíritus
         </div>
-        <div className="sgrid">
-          {sprites.map((s) => {
-            const p = progress[s.id] || { captured: false, level: 1 };
-            return (
-              <div key={s.id} className={`scard ${p.captured ? "" : "miss"}`}>
-                <div className="si">
-                  {s.image_url ? <img src={s.image_url} /> : null}
+        <div className="sgrid-container">
+          {Object.entries(groupBySprite(sprites)).map(
+            ([spriteName, spriteGroup]) => {
+              return (
+                <div key={spriteName} className="sgrid">
+                  {spriteGroup.map((s, index) => {
+                    if (!s) {
+                      return (
+                        <div
+                          key={`${spriteName}-no-${index}`}
+                          className="scard miss"
+                        />
+                      );
+                    }
+
+                    const p = progress[s.id] || { captured: false, level: 1 };
+                    return (
+                      <div
+                        key={s.id}
+                        className={`scard ${p.captured ? "" : "miss"}`}
+                      >
+                        <div className="si">
+                          {s.image_url ? <img src={s.image_url} /> : null}
+                        </div>
+                        <div className="sn">{s.name}</div>
+                        <div className="sbar">
+                          <i
+                            style={{
+                              width: p.captured
+                                ? `${(p.level / 5) * 100}%`
+                                : "0%",
+                            }}
+                          />
+                        </div>
+                      </div>
+                    );
+                  })}
                 </div>
-                <div className="sn">{s.name}</div>
-                <div className="sbar">
-                  <i
-                    style={{
-                      width: p.captured ? `${(p.level / 5) * 100}%` : "0%",
-                    }}
-                  />
-                </div>
-              </div>
-            );
-          })}
+              );
+            },
+          )}
         </div>
       </div>
     </div>
